@@ -49,12 +49,10 @@ public class Card extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        titleLabel.setForeground(new java.awt.Color(225, 225, 225));
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         titleLabel.setText("Title");
 
-        valuesLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        valuesLabel.setForeground(new java.awt.Color(225, 225, 225));
+        valuesLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         valuesLabel.setText("Values");
 
         iconLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -68,8 +66,8 @@ public class Card extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(titleLabel)
                     .addComponent(valuesLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
-                .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -77,12 +75,11 @@ public class Card extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titleLabel)
-                        .addGap(0, 59, Short.MAX_VALUE))
-                    .addComponent(iconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valuesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(valuesLabel)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

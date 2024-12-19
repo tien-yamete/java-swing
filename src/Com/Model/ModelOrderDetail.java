@@ -46,11 +46,5 @@ public class ModelOrderDetail {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-
-    
-
-    
-    
+    }  
 }

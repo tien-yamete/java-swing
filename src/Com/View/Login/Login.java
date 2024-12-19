@@ -44,8 +44,8 @@ public class Login extends javax.swing.JFrame {
         LoginButton = new javax.swing.JButton();
         Text = new javax.swing.JLabel();
         SignUpButton = new javax.swing.JButton();
-        UserNameTextField = new Com.Swing.SearchText();
-        UserPasswordField = new Com.Swing.SearchText();
+        UserNameTextField = new Com.View.Swing.SearchText();
+        UserPasswordField = new Com.View.Swing.SearchText();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -207,7 +207,7 @@ public class Login extends javax.swing.JFrame {
         for(ModelUser m : udao.getListUser()){
             if(UserNameTextField.getText().equalsIgnoreCase(m.getUsername()) && UserPasswordField.getText().equalsIgnoreCase(m.getPassword())){
                 user = m;
-                JOptionPane.showMessageDialog(this, "Dang nhap thanh cong");
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
                 Dashboard testDasdboard = new Dashboard();
                 testDasdboard.setVisible(true);
                 testDasdboard.pack();
@@ -217,7 +217,7 @@ public class Login extends javax.swing.JFrame {
             }   
         }
         if(kt == false)
-            JOptionPane.showMessageDialog(this, "Dang nhap that bai");      
+            JOptionPane.showMessageDialog(this, "Đăng nhập thất bại !!!");      
     }//GEN-LAST:event_LoginButtonActionPerformed
 
   
@@ -231,8 +231,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton SignUpButton;
     private javax.swing.JLabel Text;
     private javax.swing.JLabel UserNameLabel;
-    private Com.Swing.SearchText UserNameTextField;
-    private Com.Swing.SearchText UserPasswordField;
+    private Com.View.Swing.SearchText UserNameTextField;
+    private Com.View.Swing.SearchText UserPasswordField;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

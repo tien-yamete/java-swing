@@ -3,16 +3,66 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/FormProductDetail.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Swing/RoundPanel.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/InputOrder.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/OrderDetailDAO.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Main/TestLogin.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/Button.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Info/EditInfo.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Staff/InputStaff.java</file>
             <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Customer/InputCustomer.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/DialogProduct.java</file>
-            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/FormSell.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/InputProductDetail.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Login/SignUp1.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Main/Main.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelOrderDetail.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ImageWrapper.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/SearchText.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/ProductCategoryDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Swing/Scrollbar/ScrollBarCustom.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Order/FormOrder.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/EditProductDetail.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelUser.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/EditProductOrder.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/FormProductDetail.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/InputTable.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Event/MenuEvent.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/InputProduct.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/Table.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Statistics/FormStatistics.java</file>
             <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/TableDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Staff/EditStaff.java</file>
             <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/OrderDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Component/Card1.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Info/InforForm.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/OrderDetailDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelProductDetail.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelTable.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/MainFormDashboard.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/DAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Info/ChangePasswordInfo.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Component/Menu.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/FormSell.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/UserDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelProduct.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Component/Card.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/MenuButton.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Dashboard/Dashboard.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Form.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Login/Login.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Staff/FormStaff.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelCard.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Customer/EditCustomer.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/TableHeaderCustom.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Sell/InputOrder.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/RoundPanel.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/DialogProductCategory.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelProductCategory.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/CustomerDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Swing/ImageAvatar.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Customer/FormCustomer.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelCustomer.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Model/ModelOrder.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/DialogProduct.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/ProductDetailDAO.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Swing/Scrollbar/ModernScrollBarUI.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/View/Form/Product/EditProduct.java</file>
+            <file>file:/C:/Users/NAME/OneDrive/Documents/NetBeansProjects/QuanLyQuanCafe/src/Com/Controller/ProductDAO.java</file>
         </group>
     </open-files>
 </project-private>

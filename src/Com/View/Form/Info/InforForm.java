@@ -45,8 +45,8 @@ public class InforForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel1 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         nameLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -353,7 +353,7 @@ public class InforForm extends javax.swing.JPanel {
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JLabel idLabel;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
@@ -372,7 +372,7 @@ public class InforForm extends javax.swing.JPanel {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JLabel positionLabel;
-    private Com.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel1;
     private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 

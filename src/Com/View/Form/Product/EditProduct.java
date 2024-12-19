@@ -8,6 +8,7 @@ import Com.View.Dashboard.Dashboard;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -68,10 +69,10 @@ public class EditProduct extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         tenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -354,8 +355,7 @@ public class EditProduct extends javax.swing.JDialog {
                 ModelProduct u = new ModelProduct(ma, ten, image, tt, mp);
                 pdao.updateProduct(u);
                 this.dispose();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IOException ex) {
             }
         }
         else
@@ -365,7 +365,7 @@ public class EditProduct extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem deleteImage;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -376,8 +376,8 @@ public class EditProduct extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> maComboBox;
     private javax.swing.JLabel maSPText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton suaButton;
     private javax.swing.JTextField tenText;
     private javax.swing.JButton thoatButton;

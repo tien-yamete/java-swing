@@ -238,7 +238,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SignUpButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="Com.Swing.SearchText" name="UserNameTextField">
+            <Component class="Com.View.Swing.SearchText" name="UserNameTextField">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -251,7 +251,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="Com.Swing.SearchText" name="UserPasswordField">
+            <Component class="Com.View.Swing.SearchText" name="UserPasswordField">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>

@@ -23,9 +23,9 @@ public class InputCustomer extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         hoTenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -326,8 +326,8 @@ public class InputCustomer extends javax.swing.JDialog {
     private javax.swing.JRadioButton namRadioButton;
     private javax.swing.JRadioButton nuRadioButton;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton themButton;
     private javax.swing.JButton thoatButton;
     // End of variables declaration//GEN-END:variables

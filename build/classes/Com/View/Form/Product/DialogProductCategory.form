@@ -68,7 +68,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="Com.Swing.RoundPanel" name="roundPanel4">
+        <Container class="Com.View.Swing.RoundPanel" name="roundPanel4">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3c" red="3c" type="rgb"/>
@@ -109,7 +109,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="Com.Swing.RoundPanel" name="roundPanel3">
+        <Container class="Com.View.Swing.RoundPanel" name="roundPanel3">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3c" red="3c" type="rgb"/>
@@ -292,7 +292,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="Com.Swing.RoundPanel" name="roundPanel2">
+        <Container class="Com.View.Swing.RoundPanel" name="roundPanel2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3c" red="3c" type="rgb"/>
@@ -327,7 +327,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="Com.Swing.Table" name="tableSP">
+                <Component class="Com.View.Swing.Table" name="tableSP">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">

@@ -2,7 +2,6 @@ package Com.View.Form.Staff;
 
 import Com.Controller.UserDAO;
 import Com.Model.ModelUser;
-import Com.View.Dashboard.Dashboard;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,19 +18,20 @@ import javax.swing.filechooser.FileFilter;
 
 public class EditStaff extends javax.swing.JDialog {
     UserDAO udao = new UserDAO();
-    private Dashboard d;
+    
     byte[] image = null;
     byte[] check = null;
     private String pathImage= null;
+    
     boolean kt = false;
     boolean ktra = false;
+    
     String emailPattern = "^[a-zA-Z0-9]+[@]+[a-zA-Z0-9]+[.]+[a-zA-Z0-9]+$";
     String mobileNumbberPattern = "^[0-9]*$";
     public EditStaff(java.awt.Frame parent, boolean modal, ModelUser modelUser) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        d = (Dashboard) parent;
         this.setTitle("Sửa nhân viên");
         
         check = modelUser.getImage();
@@ -83,10 +83,10 @@ public class EditStaff extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         hoTenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -520,7 +520,7 @@ public class EditStaff extends javax.swing.JDialog {
     private javax.swing.JTextField diaChiText;
     private javax.swing.JTextField emailText;
     private javax.swing.JTextField hoTenText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -539,8 +539,8 @@ public class EditStaff extends javax.swing.JDialog {
     private javax.swing.JRadioButton namRadioButton;
     private javax.swing.JRadioButton nuRadioButton;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton suaButton;
     private javax.swing.JTextField taiKhoanText;
     private javax.swing.JButton thoatButton;

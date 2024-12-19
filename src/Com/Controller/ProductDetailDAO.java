@@ -3,6 +3,7 @@ package Com.Controller;
 import Com.Model.ModelProduct;
 import Com.Model.ModelProductCategory;
 import Com.Model.ModelProductDetail;
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -71,33 +72,43 @@ public class ProductDetailDAO {
         }
         return dsDetails;
     }
-    public boolean updateProductDetail(ModelProductDetail modelProductDetail){
-        try {           
-            PreparedStatement ps = dao.getConn().prepareStatement("UPDATE ChiTietSP SET MaCTSP=?, MaSP=?, NgayNhap=?, SoLuong=?, Gia=?, MoTa=? WHERE MaCTSP = '"+modelProductDetail.getProductDetailId()+"'");
-            ps.setString(1, modelProductDetail.getProductDetailId());
-            ps.setString(2, modelProductDetail.getProduct().getProductId());
-            ps.setString(3, modelProductDetail.getEntryDate());
-            ps.setString(4, String.valueOf(modelProductDetail.getQuantity()));
-            ps.setString(5, String.valueOf(modelProductDetail.getPrice()));
-            ps.setString(6, modelProductDetail.getDescription());
-            ps.execute();
-
-            JOptionPane.showMessageDialog(null, "Updated");    
-            return true;
-        } catch (Exception e ) {
-            JOptionPane.showMessageDialog(null, "update not successful");      
-        }
-        return false;
-        
+    public boolean updateProductDetail(ModelProductDetail modelProductDetail) throws SQLException{         
+        PreparedStatement ps = dao.getConn().prepareStatement("UPDATE ChiTietSP SET MaCTSP=?, MaSP=?, NgayNhap=?, SoLuong=?, Gia=?, MoTa=? WHERE MaCTSP = '"+modelProductDetail.getProductDetailId()+"'");
+        ps.setString(1, modelProductDetail.getProductDetailId());
+        ps.setString(2, modelProductDetail.getProduct().getProductId());
+        ps.setString(3, modelProductDetail.getEntryDate());
+        ps.setString(4, String.valueOf(modelProductDetail.getQuantity()));
+        ps.setString(5, String.valueOf(modelProductDetail.getPrice()));
+        ps.setString(6, modelProductDetail.getDescription());
+        return ps.executeUpdate()>0;   
     }
     
-    public void deleteProductDetail(String maSP) {
-        try {
-            String del = "delete from ChiTietSP where MaCTSP='"+maSP+"'";
-            PreparedStatement ps = dao.getConn().prepareStatement(del);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+    public boolean updateProductDetailByMaCTSP(String maCTSP, int soLuong) throws SQLException{         
+        PreparedStatement ps = dao.getConn().prepareStatement("UPDATE ChiTietSP SET SoLuong= SoLuong + ? WHERE MaCTSP = '"+maCTSP+"'");
+        ps.setInt(1, soLuong);
+        return ps.executeUpdate()>0;   
+    }
+    
+    public boolean deleteChiTietSPByMaSP(String maSP) throws SQLException {
+        // Lấy tất cả các MaCTSP liên quan đến MaSP
+        String selectSQL = "SELECT MaCTSP FROM ChiTietSP WHERE MaSP = ?";
+        try (PreparedStatement selectStmt = dao.getConn().prepareStatement(selectSQL)) {
+            selectStmt.setString(1, maSP);
+            ResultSet rs = selectStmt.executeQuery();
+
+            // Xóa trong bảng ChiTietHoaDon trước
+            OrderDetailDAO cthdDAO = new OrderDetailDAO();
+            while (rs.next()) {
+                String maCTSP = rs.getString("MaCTSP");
+                cthdDAO.deleteChiTietHoaDonByMaCTSP(maCTSP);
+            }
+
+            // Sau đó xóa trong bảng ChiTietSP
+            String deleteSQL = "DELETE FROM ChiTietSP WHERE MaSP = ?";
+            try (PreparedStatement deleteStmt = dao.getConn().prepareStatement(deleteSQL)) {
+                deleteStmt.setString(1, maSP);
+                return deleteStmt.executeUpdate() > 0;
+            }
         }
     }
     

@@ -1,6 +1,7 @@
 package Com.Controller;
 
 import Com.Model.ModelProductCategory;
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ public class ProductCategoryDAO {
             ps.setString(3, modelProductCategory.getStatus());
             JOptionPane.showMessageDialog(null, "Thêm thành công");
             return ps.executeUpdate() > 0;
-        }catch(Exception ex){
+        }catch(HeadlessException | SQLException ex){
             ex.printStackTrace();
         }
         return false;
@@ -62,19 +63,37 @@ public class ProductCategoryDAO {
         
     }
     
-    public void deleteProduct(String maSP) {
-        try {
-            String deleteChiTietSP = "DELETE FROM ChiTietSP WHERE MaSP IN (SELECT MaSP FROM SanPham WHERE MaLoaiSP = '"+maSP+ "')";
-            PreparedStatement ps = dao.getConn().prepareStatement(deleteChiTietSP);
-            ps.executeUpdate();
-            String deleteSanPham = "DELETE FROM SanPham WHERE MaLoaiSP = '"+maSP+"'";
-            ps = dao.getConn().prepareStatement(deleteSanPham);
-            ps.executeUpdate();
-            String sql = "delete from LoaiSanPham where MaLoaiSP = '"+maSP+"'";
-            ps = dao.getConn().prepareStatement(sql);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+  
+    public boolean deleteLoaiSanPham(String maLoaiSP) throws SQLException {
+         // 1. Xóa ChiTietHoaDon liên quan thông qua ChiTietSP và SanPham
+        String sqlDeleteChiTietHoaDon = "DELETE FROM ChiTietHoaDon WHERE MaCTSP IN (" +
+            "SELECT MaCTSP FROM ChiTietSP WHERE MaSP IN (" +
+            "SELECT MaSP FROM SanPham WHERE MaLoaiSP = ?))";
+        try (PreparedStatement stmt0 = dao.getConn().prepareStatement(sqlDeleteChiTietHoaDon)) {
+            stmt0.setString(1, maLoaiSP);
+            stmt0.executeUpdate();
+        }
+
+        // 2. Xóa ChiTietSP liên quan thông qua MaSP trong SanPham
+        String sqlDeleteChiTietSP = "DELETE FROM ChiTietSP WHERE MaSP IN (" +
+            "SELECT MaSP FROM SanPham WHERE MaLoaiSP = ?)";
+        try (PreparedStatement stmt1 = dao.getConn().prepareStatement(sqlDeleteChiTietSP)) {
+            stmt1.setString(1, maLoaiSP);
+            stmt1.executeUpdate();
+        }
+
+        // 3. Xóa SanPham liên quan đến MaLoaiSP
+        String sqlDeleteSanPham = "DELETE FROM SanPham WHERE MaLoaiSP = ?";
+        try (PreparedStatement stmt2 = dao.getConn().prepareStatement(sqlDeleteSanPham)) {
+            stmt2.setString(1, maLoaiSP);
+            stmt2.executeUpdate();
+        }
+
+        // 4. Xóa LoaiSanPham liên quan
+        String sqlDeleteLoaiSP = "DELETE FROM LoaiSanPham WHERE MaLoaiSP = ?";
+        try (PreparedStatement stmt3 = dao.getConn().prepareStatement(sqlDeleteLoaiSP)) {
+            stmt3.setString(1, maLoaiSP);
+            return stmt3.executeUpdate() > 0;
         }
     }
 }

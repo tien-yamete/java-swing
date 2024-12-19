@@ -3,7 +3,7 @@ package Com.Model;
 public class ModelOrder {
     private int orderId;
     private int employeeID;
-    private String tableID; 
+    private ModelTable modelTable; 
     private int customerID;
     private String createdDate;
     private double price;
@@ -12,19 +12,19 @@ public class ModelOrder {
     public ModelOrder() {
     }
 
-    public ModelOrder(int orderId, int employeeID, String tableID, int customerID, String createdDate, double price, String status) {
+    public ModelOrder(int orderId, int employeeID, ModelTable modelTable, int customerID, String createdDate, double price, String status) {
         this.orderId = orderId;
         this.employeeID = employeeID;
-        this.tableID = tableID;
+        this.modelTable = modelTable;
         this.customerID = customerID;
         this.createdDate = createdDate;
         this.price = price;
         this.status = status;
     }
 
-    public ModelOrder(int employeeID, String tableID, int customerID, String createdDate, double price, String status) {
+    public ModelOrder(int employeeID, ModelTable modelTable, int customerID, String createdDate, double price, String status) {
         this.employeeID = employeeID;
-        this.tableID = tableID;
+        this.modelTable = modelTable;
         this.customerID = customerID;
         this.createdDate = createdDate;
         this.price = price;
@@ -63,12 +63,12 @@ public class ModelOrder {
         this.employeeID = employeeID;
     }
 
-    public String getTableID() {
-        return tableID;
+    public ModelTable getModelTable() {
+        return modelTable;
     }
 
-    public void setTableID(String tableID) {
-        this.tableID = tableID;
+    public void setModelTable(ModelTable modelTable) {
+        this.modelTable = modelTable;
     }
 
     public int getCustomerID() {

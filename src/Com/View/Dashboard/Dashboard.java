@@ -6,9 +6,10 @@ import Com.View.Form.Customer.FormCustomer;
 import Com.View.Form.Staff.FormStaff;
 import Com.View.Form.Info.InforForm;
 import Com.View.Form.MainFormDashboard;
+import Com.View.Form.Order.FormOrder;
 import Com.View.Form.Product.FormProductDetail;
-import Com.View.Form.Sale.FormSale;
 import Com.View.Form.Sell.FormSell;
+import Com.View.Form.Statistics.FormStatistics;
 import Com.View.Login.Login;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,39 +23,42 @@ public class Dashboard extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Com/Icon/iconFrame.png")).getImage());
         initComponents();
         getContentPane().setBackground(new Color(63, 109, 217));
-        MenuEvent event = new MenuEvent() {
-            @Override
-            public void menuSelected(int index) {
-                System.out.println("Selected : "+index);
-                if(index == 0){
+        MenuEvent event;
+        event = (int index) -> {
+            switch (index) {
+                case 0 -> {
                     MainFormDashboard mainFormDashboard = new MainFormDashboard();
                     showForm(mainFormDashboard);
                 }
-                else if(index == 1){
+                case 1 -> {
                     FormSell formSell = new FormSell();
                     showForm(formSell);
                 }
-                else if(index == 2){
+                case 2 -> {
                     FormStaff formStaff = new FormStaff();
                     showForm(formStaff);
                 }
-                else if(index ==3){
-                    FormSale formSale = new FormSale();
-                    showForm(formSale);
+                case 4 -> {
+                    FormOrder formOrder = new FormOrder();
+                    showForm(formOrder);
                 }
-                else if(index == 5){
+                case 5 -> {
                     FormProductDetail formProduct = new FormProductDetail();
                     showForm(formProduct);
                 }
-                else if(index == 6){
+                case 6 -> {
                     FormCustomer formCustomer = new FormCustomer();
                     showForm(formCustomer);
                 }
-                else if(index == 8){
+                case 7 -> {
+                    FormStatistics formStatistics  = new FormStatistics();
+                    showForm(formStatistics);
+                }
+                case 8 -> {
                     InforForm inforForm = new InforForm();
                     showForm(inforForm);
                 }
-                else if(index == 9){
+                case 9 -> {
                     int opt = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không ?","Delete",JOptionPane.YES_NO_OPTION);
                     if(opt == 0){
                         Login loginFrame = new Login();
@@ -65,9 +69,7 @@ public class Dashboard extends javax.swing.JFrame {
                         closeFrame();
                     }
                 }
-                else{
-                    showForm(new Form(index + ""));
-                }
+                default -> showForm(new Form(index + ""));
             }
         };
         menu.initMenu(event);

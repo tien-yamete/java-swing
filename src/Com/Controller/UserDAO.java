@@ -1,6 +1,7 @@
 package Com.Controller;
 
 import Com.Model.ModelUser;
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -32,8 +33,7 @@ public class UserDAO {
                 ps.setBytes(10, modelUser.getImage());
             JOptionPane.showMessageDialog(null, "Thêm thành công");
             return ps.executeUpdate() > 0;
-        }catch(Exception ex){
-            ex.printStackTrace();
+        }catch(HeadlessException | SQLException ex){
         }
         return false;
     }
@@ -59,8 +59,7 @@ public class UserDAO {
                 s.setImage(rs.getBytes("ImageStaff"));
                 dsUser.add(s);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (SQLException ex){
         }
         return dsUser;
     }
@@ -104,23 +103,36 @@ public class UserDAO {
 
             JOptionPane.showMessageDialog(null, "Updated");    
             return true;
-        } catch (Exception e ) {
+        } catch (HeadlessException | SQLException e ) {
             JOptionPane.showMessageDialog(null, "update not successful");      
         }
         return false;
         
     }
     
-    public void deleteStaff(String staffID) {
-        try {
-            String del = "delete from staff where StaffID="+staffID;
-            PreparedStatement ps = dao.getConn().prepareStatement(del);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+    public boolean deleteStaff(String staffID) throws SQLException{
+            // 1. Xóa chi tiết hóa đơn (ChiTietHoaDon) liên quan thông qua HoaDon
+            String sqlDeleteChiTietHoaDon = "DELETE FROM ChiTietHoaDon WHERE MaHD IN " +
+                    "(SELECT MaHD FROM HoaDon WHERE StaffID = ?)";
+            try (PreparedStatement stmt1 = dao.getConn().prepareStatement(sqlDeleteChiTietHoaDon)) {
+                stmt1.setString(1, staffID);
+                stmt1.executeUpdate();
+            }
+
+            // 2. Xóa hóa đơn (HoaDon) liên quan đến StaffID
+            String sqlDeleteHoaDon = "DELETE FROM HoaDon WHERE StaffID = ?";
+            try (PreparedStatement stmt2 = dao.getConn().prepareStatement(sqlDeleteHoaDon)) {
+                stmt2.setString(1, staffID);
+                stmt2.executeUpdate();
+            }
+
+            // 3. Xóa nhân viên (Staff)
+            String sqlDeleteStaff = "DELETE FROM Staff WHERE StaffID = ?";
+            try (PreparedStatement stmt3 = dao.getConn().prepareStatement(sqlDeleteStaff)) {
+                stmt3.setString(1, staffID);
+            return stmt3.executeUpdate()>0;
         }
     }
-    
     public  ArrayList<ModelUser> searchUser(String name){
         ArrayList<ModelUser> dsUser = new ArrayList<>();
         String sql = "SELECT * FROM Staff where (FullName like N'%"+name+"%') or (FullName like N'"+name+"%') or (FullName like N'%"+name+"')";
@@ -142,8 +154,7 @@ public class UserDAO {
                 s.setImage(rs.getBytes("ImageStaff"));
                 dsUser.add(s);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (SQLException ex){
         }
         return dsUser;
     }

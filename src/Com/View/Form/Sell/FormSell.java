@@ -1,10 +1,12 @@
 package Com.View.Form.Sell;
 
+import Com.Controller.CustomerDAO;
 import Com.Controller.OrderDAO;
 import Com.Controller.OrderDetailDAO;
 import Com.Controller.ProductDetailDAO;
 import Com.Controller.TableDAO;
 import Com.Model.ImageWrapper;
+import Com.Model.ModelCustomer;
 import Com.Model.ModelOrder;
 import Com.Model.ModelOrderDetail;
 import Com.Model.ModelProductDetail;
@@ -17,8 +19,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,6 +41,7 @@ public class FormSell extends javax.swing.JPanel {
     DefaultTableModel model;
     DefaultTableModel modelHD;
     boolean kt;
+    boolean daVaoBan = false;
     ProductDetailDAO pddao = new ProductDetailDAO();
     TableDAO tdao = new TableDAO();
     String maBanSelected =null;
@@ -45,6 +51,12 @@ public class FormSell extends javax.swing.JPanel {
     ModelTable banSD = null;
     OrderDAO odao = new OrderDAO();
     OrderDetailDAO oddao =  new OrderDetailDAO();
+    ModelOrder modelOrderUse;
+    ModelOrderDetail modelOrderDetailUse;
+    CustomerDAO cdao = new CustomerDAO();
+    String pricePattern = "^[0-9]*$";
+    private double tongTien;
+    
     public FormSell() {
         initComponents();
         setOpaque(false);
@@ -72,6 +84,8 @@ public class FormSell extends javax.swing.JPanel {
 
         ListSelectionModel selectionModel = tableSP.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        initDataTableSP();
+        initListenerTable();
         
         //Dữ liệu cho bảng hóa đơn
         modelHD = new DefaultTableModel() {
@@ -95,10 +109,14 @@ public class FormSell extends javax.swing.JPanel {
         
         ListSelectionModel selectionModelHD = tableHD.getSelectionModel();
         selectionModelHD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        initDataTableSP();
-        initListenerTable();
+        initListenerTableHD();
+        
+        for(ModelOrder m: odao.getListTableUse()){
+            tdao.updateTable(new ModelTable(m.getModelTable().getTableID(),m.getModelTable().getTableName(),"Có Khách"));
+        }
         jPanel1.setLayout(new GridLayout(0, 4, 10, 10));
         initPanel1();
+        
         
     }
 
@@ -106,21 +124,24 @@ public class FormSell extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
+        InsertTablePopupMenu = new javax.swing.JPopupMenu();
         themBanMenuItem = new javax.swing.JMenuItem();
-        jPopupMenu2 = new javax.swing.JPopupMenu();
+        EditTablePopupMenu = new javax.swing.JPopupMenu();
         taoDonMenuItem = new javax.swing.JMenuItem();
         vaoBanMenuItem = new javax.swing.JMenuItem();
         xoaBanMenuItem = new javax.swing.JMenuItem();
         banMenu = new javax.swing.JMenu();
         donBanMenuItem = new javax.swing.JMenuItem();
         hoanThanhMenuItem = new javax.swing.JMenuItem();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        EditOrderPopupMenu = new javax.swing.JPopupMenu();
+        editMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableSP = new Com.Swing.Table();
-        roundPanel4 = new Com.Swing.RoundPanel();
+        tableSP = new Com.View.Swing.Table();
+        roundPanel4 = new Com.View.Swing.RoundPanel();
         jLabel3 = new javax.swing.JLabel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel4 = new javax.swing.JLabel();
         maCTSPText = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -133,34 +154,34 @@ public class FormSell extends javax.swing.JPanel {
         soLuongSpinner = new javax.swing.JSpinner();
         resetButton = new javax.swing.JButton();
         thenMonButton = new javax.swing.JButton();
-        roundPanel5 = new Com.Swing.RoundPanel();
+        roundPanel5 = new Com.View.Swing.RoundPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableHD = new Com.Swing.Table();
-        roundPanel6 = new Com.Swing.RoundPanel();
-        searchText2 = new Com.Swing.SearchText();
-        roundPanel7 = new Com.Swing.RoundPanel();
+        tableHD = new Com.View.Swing.Table();
+        roundPanel6 = new Com.View.Swing.RoundPanel();
+        searchText2 = new Com.View.Swing.SearchText();
+        roundPanel7 = new Com.View.Swing.RoundPanel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        maHoaDonText = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        maKHText = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        tongTienText = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tienKhachTraText = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
+        ngayTaoText = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        tenNhanVienText = new javax.swing.JLabel();
         thanhToanButton = new javax.swing.JButton();
         huyDonButton = new javax.swing.JButton();
-        roundPanel8 = new Com.Swing.RoundPanel();
+        tienTraLaiText = new javax.swing.JLabel();
+        roundPanel8 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         maBanSDText = new javax.swing.JLabel();
@@ -175,7 +196,7 @@ public class FormSell extends javax.swing.JPanel {
                 themBanMenuItemActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(themBanMenuItem);
+        InsertTablePopupMenu.add(themBanMenuItem);
 
         taoDonMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/order.png"))); // NOI18N
         taoDonMenuItem.setText("Tạo Đơn");
@@ -184,7 +205,7 @@ public class FormSell extends javax.swing.JPanel {
                 taoDonMenuItemActionPerformed(evt);
             }
         });
-        jPopupMenu2.add(taoDonMenuItem);
+        EditTablePopupMenu.add(taoDonMenuItem);
 
         vaoBanMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/join.png"))); // NOI18N
         vaoBanMenuItem.setText("Vào Bàn");
@@ -193,7 +214,7 @@ public class FormSell extends javax.swing.JPanel {
                 vaoBanMenuItemActionPerformed(evt);
             }
         });
-        jPopupMenu2.add(vaoBanMenuItem);
+        EditTablePopupMenu.add(vaoBanMenuItem);
 
         xoaBanMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/delete.png"))); // NOI18N
         xoaBanMenuItem.setText("Xóa Bàn");
@@ -202,7 +223,7 @@ public class FormSell extends javax.swing.JPanel {
                 xoaBanMenuItemActionPerformed(evt);
             }
         });
-        jPopupMenu2.add(xoaBanMenuItem);
+        EditTablePopupMenu.add(xoaBanMenuItem);
 
         banMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/table.png"))); // NOI18N
         banMenu.setText("Bàn");
@@ -225,7 +246,25 @@ public class FormSell extends javax.swing.JPanel {
         });
         banMenu.add(hoanThanhMenuItem);
 
-        jPopupMenu2.add(banMenu);
+        EditTablePopupMenu.add(banMenu);
+
+        editMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/sync.png"))); // NOI18N
+        editMenuItem.setText("Sửa");
+        editMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMenuItemActionPerformed(evt);
+            }
+        });
+        EditOrderPopupMenu.add(editMenuItem);
+
+        deleteMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/delete.png"))); // NOI18N
+        deleteMenuItem.setText("Xóa");
+        deleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteMenuItemActionPerformed(evt);
+            }
+        });
+        EditOrderPopupMenu.add(deleteMenuItem);
 
         roundPanel2.setBackground(new java.awt.Color(60, 60, 60));
 
@@ -245,7 +284,7 @@ public class FormSell extends javax.swing.JPanel {
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundPanel2Layout.setVerticalGroup(
@@ -464,35 +503,41 @@ public class FormSell extends javax.swing.JPanel {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel14.setText("Mã Hóa Đơn :");
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel15.setText("NULL");
+        maHoaDonText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        maHoaDonText.setForeground(new java.awt.Color(255, 255, 255));
+        maHoaDonText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        maHoaDonText.setText("NULL");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel16.setText("Bàn :");
+        jLabel16.setText("Khách Hàng :");
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel17.setText("NULL");
+        maKHText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        maKHText.setForeground(new java.awt.Color(255, 255, 255));
+        maKHText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        maKHText.setText("NULL");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel18.setText("Tổng Tiền :");
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel19.setText("NULL");
+        tongTienText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tongTienText.setForeground(new java.awt.Color(255, 255, 255));
+        tongTienText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        tongTienText.setText("NULL");
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel20.setText("Tiền Khách Trả :");
+
+        tienKhachTraText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tienKhachTraTextKeyReleased(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
@@ -504,20 +549,20 @@ public class FormSell extends javax.swing.JPanel {
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel22.setText("Ngày Tạo :");
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel23.setText("NULL");
+        ngayTaoText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ngayTaoText.setForeground(new java.awt.Color(255, 255, 255));
+        ngayTaoText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ngayTaoText.setText("NULL");
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel24.setText("Nhân Viên :");
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel25.setText("NULL");
+        tenNhanVienText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tenNhanVienText.setForeground(new java.awt.Color(255, 255, 255));
+        tenNhanVienText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        tenNhanVienText.setText("NULL");
 
         thanhToanButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         thanhToanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/bill.png"))); // NOI18N
@@ -530,7 +575,16 @@ public class FormSell extends javax.swing.JPanel {
 
         huyDonButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         huyDonButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Com/Icon/delete.png"))); // NOI18N
-        huyDonButton.setText("Hủy Đơn");
+        huyDonButton.setText("Hủy Bàn");
+        huyDonButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                huyDonButtonActionPerformed(evt);
+            }
+        });
+
+        tienTraLaiText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tienTraLaiText.setForeground(new java.awt.Color(255, 255, 255));
+        tienTraLaiText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         javax.swing.GroupLayout roundPanel7Layout = new javax.swing.GroupLayout(roundPanel7);
         roundPanel7.setLayout(roundPanel7Layout);
@@ -546,25 +600,23 @@ public class FormSell extends javax.swing.JPanel {
                                     .addGroup(roundPanel7Layout.createSequentialGroup()
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(maHoaDonText, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(roundPanel7Layout.createSequentialGroup()
                                         .addComponent(jLabel18)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(18, 27, Short.MAX_VALUE)
+                                        .addComponent(tongTienText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(maKHText, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(roundPanel7Layout.createSequentialGroup()
+                                .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel21))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(roundPanel7Layout.createSequentialGroup()
-                                        .addComponent(jLabel20)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(roundPanel7Layout.createSequentialGroup()
-                                        .addComponent(jLabel21)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(tienTraLaiText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tienKhachTraText, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(15, 15, 15))
                     .addGroup(roundPanel7Layout.createSequentialGroup()
@@ -572,12 +624,12 @@ public class FormSell extends javax.swing.JPanel {
                             .addGroup(roundPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(tenNhanVienText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                .addComponent(ngayTaoText, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(thanhToanButton)
                             .addComponent(huyDonButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -589,30 +641,30 @@ public class FormSell extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel15)
+                    .addComponent(maHoaDonText)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel17))
+                    .addComponent(maKHText))
                 .addGap(20, 20, 20)
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19))
+                    .addComponent(tongTienText))
                 .addGap(20, 20, 20)
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tienKhachTraText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(tienTraLaiText))
+                .addGap(22, 22, 22)
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jLabel23)
+                    .addComponent(ngayTaoText)
                     .addComponent(thanhToanButton))
                 .addGap(20, 20, 20)
                 .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jLabel25)
+                    .addComponent(tenNhanVienText)
                     .addComponent(huyDonButton))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -750,9 +802,9 @@ public class FormSell extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(roundPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(roundPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roundPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -817,7 +869,7 @@ public class FormSell extends javax.swing.JPanel {
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         if(SwingUtilities.isRightMouseButton(evt)){
-            jPopupMenu1.show(jPanel1, evt.getX(), evt.getY());
+            InsertTablePopupMenu.show(jPanel1, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jPanel1MousePressed
 
@@ -839,19 +891,43 @@ public class FormSell extends javax.swing.JPanel {
     private void xoaBanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaBanMenuItemActionPerformed
         int opt = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa không ?","Delete",JOptionPane.YES_NO_OPTION);
             if(opt == 0){
+            try {
                 tdao.deleteTable(maBanSelected);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+            }
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
                 updateTable();
             }
     }//GEN-LAST:event_xoaBanMenuItemActionPerformed
 
     private void vaoBanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaoBanMenuItemActionPerformed
+        modelHD = (DefaultTableModel) tableHD.getModel();
+        modelHD.setRowCount(0);
         if(!banSD.getStatus().equalsIgnoreCase("có khách")){
             JOptionPane.showMessageDialog(null, "Bàn chưa có đơn vui lòng tạo đơn !!!");
             return;
         }
         maBanSDText.setText(banSD.getTableID());
         tenBanSDText.setText(banSD.getTableName());
+        for(ModelOrder m : odao.getListTableUse()){
+            if(m.getModelTable().getTableID().equals(banSD.getTableID())){
+                modelOrderUse = m;
+                break;
+            }
+        }
         initDataTableHD();
+        maHoaDonText.setText(String.valueOf(modelOrderUse.getOrderId()));
+        setTongTien();
+        ngayTaoText.setText(modelOrderUse.getCreatedDate());
+        for(ModelCustomer m : cdao.getListCustomer()){
+            if(m.getId()==modelOrderUse.getCustomerID()){
+               maKHText.setText(String.valueOf(m.getName()));
+               break;
+            }
+        }
+        tenNhanVienText.setText(Login.user.getName());
+        daVaoBan=true;
     }//GEN-LAST:event_vaoBanMenuItemActionPerformed
 
     private void donBanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donBanMenuItemActionPerformed
@@ -870,7 +946,35 @@ public class FormSell extends javax.swing.JPanel {
     }//GEN-LAST:event_donBanMenuItemActionPerformed
 
     private void thanhToanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thanhToanButtonActionPerformed
-        // TODO add your handling code here:
+        if(!daVaoBan){
+            JOptionPane.showMessageDialog(null, "Vào bàn đi rồi nhấn thanh toán :>");
+            return;
+        }
+        int opt = JOptionPane.showConfirmDialog(null, "Bạn có muốn thanh toán không ?","Delete",JOptionPane.YES_NO_OPTION);
+            if(opt == 0){
+                if(tongTien==0){
+                    JOptionPane.showMessageDialog(null, "Hoá đơn rỗng không thể thanh toán !!!");
+                    return;
+                }
+                if(!tienTraLaiText.getText().equals("")&&Double.parseDouble(tienTraLaiText.getText())>=0){
+                    modelOrderUse.setPrice(tongTien);
+                    modelOrderUse.setStatus("Đã Thanh Toán");
+                    try {
+                        odao.updateOrder(modelOrderUse);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Thanh toán thất bại");
+                        return;
+                    }
+                    JOptionPane.showMessageDialog(null, "Thanh toán thánh công");
+                    modelHD = (DefaultTableModel) tableHD.getModel();
+                    modelHD.setRowCount(0);
+                    lamMoiKhiRoiBan();
+                    tdao.updateTable(new ModelTable(banSD.getTableID(),banSD.getTableName(),"Còn Trống"));
+                    updateTable();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Chưa thanh toán tiền");
+                } 
+            }
     }//GEN-LAST:event_thanhToanButtonActionPerformed
 
     private void taoDonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taoDonMenuItemActionPerformed
@@ -884,7 +988,7 @@ public class FormSell extends javax.swing.JPanel {
             LocalDate l = LocalDate.now();
 
             if(inputOrder.isKt()){
-                ModelOrder m = new ModelOrder(Login.user.getId(),banSD.getTableID(),inputOrder.getMaKH(),String.valueOf(l),0,"Chưa Thanh Toán");
+                ModelOrder m = new ModelOrder(Login.user.getId(),banSD,inputOrder.getMaKH(),String.valueOf(l),0,"Chưa Thanh Toán");
                 odao.addOrder(m);
                 tdao.updateTable(new ModelTable(banSD.getTableID(), banSD.getTableName(),"Có Khách"));
                 updateTable();
@@ -905,43 +1009,141 @@ public class FormSell extends javax.swing.JPanel {
     }//GEN-LAST:event_hoanThanhMenuItemActionPerformed
 
     private void roiBanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roiBanButtonActionPerformed
-        maBanSDText.setText("Chưa Sử Dụng");
-        tenBanSDText.setText("Chưa Sử Dụng");
-        modelHD = (DefaultTableModel) tableHD.getModel();
-        modelHD.setRowCount(0);
+        lamMoiKhiRoiBan();
     }//GEN-LAST:event_roiBanButtonActionPerformed
 
     private void thenMonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thenMonButtonActionPerformed
-        //ModelOrderDetail themMon = new ModelOrderDetail(banSD.getTableID(), modelProductDetail, Integer.parseInt(soLuongSpinner.getValue()), Double.parseDouble(soLuongSpinner.getValue()*modelProductDetail.getPrice()));
-        
-        //modelProductDetail;
+        if(daVaoBan){
+            for(ModelOrderDetail m: oddao.getListOrderDetail(modelOrderUse.getOrderId())){
+                if(m.getProductDetail().getProductDetailId().equalsIgnoreCase(modelProductDetail.getProductDetailId())){
+                    JOptionPane.showMessageDialog(null, "Sản Phẩm đã có trong hóa đơn không thể thêm đc !!!");
+                    return;
+                }
+            }
+            double  gia = (int)soLuongSpinner.getValue()*modelProductDetail.getPrice();
+            ModelOrderDetail themMon = new ModelOrderDetail(modelOrderUse.getOrderId(), modelProductDetail,(int)soLuongSpinner.getValue(),gia);
+            oddao.addOrderDetail(themMon);
+            refreshTableHD();
+            setTongTien();
+            modelOrderUse.setPrice(tongTien);
+            try {
+                odao.updateOrder(modelOrderUse);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Thêm thất bại !!!");
+                return;
+            }
+            ModelProductDetail soLuongCon = modelProductDetail;
+            soLuongCon.setQuantity(modelProductDetail.getQuantity()-(int)soLuongSpinner.getValue());
+            try {
+                pddao.updateProductDetail(soLuongCon);
+            } catch (SQLException ex) {
+                Logger.getLogger(FormSell.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            refreshTableSP();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Chưa vào bàn chưa thể thêm được !!!");
+        }
     }//GEN-LAST:event_thenMonButtonActionPerformed
+
+    private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
+        int soLuong = 0;
+        for(ModelProductDetail m: pddao.getListProductDetail()){
+            if(modelOrderDetailUse.getProductDetail().getProductDetailId().equals(m.getProductDetailId())){
+                soLuong = m.getQuantity();
+            }
+        }
+        EditProductOrder editProductOrder = new EditProductOrder(Dashboard, true, modelOrderDetailUse, soLuong);
+        editProductOrder.setVisible(true);
+        if(editProductOrder.isKt()){
+            refreshTableHD();
+            setTongTien();
+            modelOrderUse.setPrice(tongTien);
+            try {
+                odao.updateOrder(modelOrderUse);
+            } catch (SQLException ex) {
+                Logger.getLogger(FormSell.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_editMenuItemActionPerformed
+
+    private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
+        try {
+            oddao.deleteChiTietHoaDon(modelOrderDetailUse.getOrderID(),modelOrderDetailUse.getProductDetail().getProductDetailId());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Xóa Thất Bại !!!");
+        }
+        JOptionPane.showMessageDialog(null, "Xóa Thành Công");
+        refreshTableHD();
+        setTongTien();
+    }//GEN-LAST:event_deleteMenuItemActionPerformed
+
+    private void tienKhachTraTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tienKhachTraTextKeyReleased
+        if(daVaoBan){
+            if(tienKhachTraText.getText().matches(pricePattern)&& !tienKhachTraText.getText().equals("") && (Integer.parseInt(tienKhachTraText.getText())>=tongTien)){
+                tienTraLaiText.setText(String.valueOf(Integer.parseInt(tienKhachTraText.getText())-tongTien));
+            }
+            else{
+                tienTraLaiText.setText("");
+            }
+        }
+    }//GEN-LAST:event_tienKhachTraTextKeyReleased
+
+    private void huyDonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_huyDonButtonActionPerformed
+        if(daVaoBan){
+        int opt = JOptionPane.showConfirmDialog(null, "Bạn có muốn hủy bàn không ?","Delete",JOptionPane.YES_NO_OPTION);
+            if(opt == 0){
+                try {
+                    modelOrderUse.setStatus("Đã Hủy");
+                    odao.updateOrder(modelOrderUse);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Hủy Đơn Thất Bại !!!");
+                }
+                JOptionPane.showMessageDialog(null, "Hủy Đơn Thành Công");
+                modelHD = (DefaultTableModel) tableHD.getModel();
+                modelHD.setRowCount(0);
+                lamMoiKhiRoiBan();
+                tdao.updateTable(new ModelTable(banSD.getTableID(),banSD.getTableName(),"Còn Trống"));
+                updateTable();
+                for(ModelOrderDetail s: oddao.getListOrderDetail(modelOrderUse.getOrderId())){
+                    try {
+                        pddao.updateProductDetailByMaCTSP(s.getProductDetail().getProductDetailId(), s.getQuantity());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormSell.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                refreshTableSP();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Bạn chưa vào bàn !!!");
+        }
+    }//GEN-LAST:event_huyDonButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPopupMenu EditOrderPopupMenu;
+    private javax.swing.JPopupMenu EditTablePopupMenu;
+    private javax.swing.JPopupMenu InsertTablePopupMenu;
     private javax.swing.JMenu banMenu;
+    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenuItem donBanMenuItem;
+    private javax.swing.JMenuItem editMenuItem;
     private javax.swing.JLabel giaBanText;
     private javax.swing.JMenuItem hoanThanhMenuItem;
     private javax.swing.JButton huyDonButton;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -949,35 +1151,38 @@ public class FormSell extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel loaiSPText;
     private javax.swing.JLabel maBanSDText;
     private javax.swing.JLabel maCTSPText;
+    private javax.swing.JLabel maHoaDonText;
+    private javax.swing.JLabel maKHText;
+    private javax.swing.JLabel ngayTaoText;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton roiBanButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
-    private Com.Swing.RoundPanel roundPanel4;
-    private Com.Swing.RoundPanel roundPanel5;
-    private Com.Swing.RoundPanel roundPanel6;
-    private Com.Swing.RoundPanel roundPanel7;
-    private Com.Swing.RoundPanel roundPanel8;
-    private Com.Swing.SearchText searchText2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel4;
+    private Com.View.Swing.RoundPanel roundPanel5;
+    private Com.View.Swing.RoundPanel roundPanel6;
+    private Com.View.Swing.RoundPanel roundPanel7;
+    private Com.View.Swing.RoundPanel roundPanel8;
+    private Com.View.Swing.SearchText searchText2;
     private javax.swing.JSpinner soLuongSpinner;
-    private Com.Swing.Table tableHD;
-    private Com.Swing.Table tableSP;
+    private Com.View.Swing.Table tableHD;
+    private Com.View.Swing.Table tableSP;
     private javax.swing.JMenuItem taoDonMenuItem;
     private javax.swing.JLabel tenBanSDText;
+    private javax.swing.JLabel tenNhanVienText;
     private javax.swing.JLabel tenText;
     private javax.swing.JButton thanhToanButton;
     private javax.swing.JMenuItem themBanMenuItem;
     private javax.swing.JButton thenMonButton;
+    private javax.swing.JTextField tienKhachTraText;
+    private javax.swing.JLabel tienTraLaiText;
+    private javax.swing.JLabel tongTienText;
     private javax.swing.JMenuItem vaoBanMenuItem;
     private javax.swing.JMenuItem xoaBanMenuItem;
     // End of variables declaration//GEN-END:variables
@@ -992,25 +1197,28 @@ public class FormSell extends javax.swing.JPanel {
         initDataTableHD();
     }
     private  void initDataTableHD() {
-//        for(ModelOrderDetail s: oddao.getListOrderDetail()){
-//                    model.addRow(new Object[]{
-//                        s.getProductDetail().getProductDetailId(), s.getProductDetail().getProduct().getProductName(), s.getQuantity(), s.getPrice(),s.getPrice()*s.getQuantity()
-//                    });       
-//        }
+        for(ModelOrderDetail s: oddao.getListOrderDetail(modelOrderUse.getOrderId())){
+            DecimalFormat formatter = new DecimalFormat("#,###.##");  // Định dạng với dấu phẩy phân cách hàng nghìn
+            String gia = formatter.format(s.getPrice())+" vnđ";
+            modelHD.addRow(new Object[]{
+                s.getProductDetail().getProductDetailId(), s.getProductDetail().getProduct().getProductName(),
+                s.getProductDetail().getProductDetailId(), s.getQuantity(), s.getProductDetail().getPrice(),gia
+            });       
+        }
     }
     private  void initDataTableSP() {
         for(ModelProductDetail s: pddao.getListProductDetail()){
             if(s.getQuantity()!=0){
                 model.addRow(new Object[]{
-                new ImageWrapper(s.getProduct().getImage()), s.getProductDetailId(), s.getProduct().getProductId(), s.getProduct().getProductName(), s.getProduct().getProductCategory().getCategoryName(), s.getEntryDate(), s.getQuantity(), s.getPrice(), s.getProduct().getStatus()
+                new ImageWrapper(s.getProduct().getImage()), s.getProductDetailId(), s.getProduct().getProductId(), s.getProduct().getProductName(),
+                    s.getProduct().getProductCategory().getCategoryName(), s.getEntryDate(), s.getQuantity(), s.getPrice(), s.getProduct().getStatus()
                 });
             }    
         }
         tableSP.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
         @Override
             public void setValue(Object value) {
-                if (value instanceof ImageWrapper) {
-                    ImageWrapper wrapper = (ImageWrapper) value;
+                if (value instanceof ImageWrapper wrapper) {
                     setIcon(wrapper.getImageIcon());
                     setText("");
                 } else {
@@ -1026,12 +1234,10 @@ public class FormSell extends javax.swing.JPanel {
     
     private void initListenerTable() {
         ListSelectionModel listSelectionModel = tableSP.getSelectionModel();
-        listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int[] rows = tableSP.getSelectedRows();
-                //Nếu được chọn sẽ set giá trị của dòng được chọn vào bảng
-                if(rows.length>0){
+        listSelectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            int[] rows = tableSP.getSelectedRows();
+            //Nếu được chọn sẽ set giá trị của dòng được chọn vào bảng
+            if (rows.length>0) {
                 byte[] image = null;
                 ImageWrapper wrapper = (ImageWrapper) tableSP.getValueAt(rows[0], 0);
                 image = wrapper.getImageBytes();
@@ -1047,39 +1253,51 @@ public class FormSell extends javax.swing.JPanel {
                     imageAvatar1.setImage(null);
                 }
                 // Tạo một SpinnerNumberModel với min = 1, value = 1, max = Số lượng hiện có, step = 1
-                SpinnerNumberModel model = new SpinnerNumberModel(1, 1, Integer.parseInt(sl), 1); 
-                soLuongSpinner.setModel(model);
-                
+                SpinnerNumberModel model1 = new SpinnerNumberModel(1, 1, Integer.parseInt(sl), 1);
+                soLuongSpinner.setModel(model1);
                 tenText.setText(ten);
                 loaiSPText.setText(lsp);
                 maCTSPText.setText(maCT);
                 DecimalFormat formatter = new DecimalFormat("#,###.##");  // Định dạng với dấu phẩy phân cách hàng nghìn
                 String gia = formatter.format(Double.valueOf(gb));
                 giaBanText.setText(gia + " vnđ");
-                
                 int selectedRow = tableSP.getSelectedRow();
                 modelProductDetail = pddao.getListProductDetail().get(selectedRow);
                 kt = true;
+            } else {
+                kt = false;
+                tenText.setText("NULL");
+                loaiSPText.setText("NULL");
+                maCTSPText.setText("NULL");
+                giaBanText.setText("NULL");
+                imageAvatar1.setImage(null);
+            }
+        });
+        
+    }
+    private void initListenerTableHD() {
+        // Thêm MouseListener cho bảng tableHD chỉ một lần
+        tableHD.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                // Kiểm tra xem chuột phải có được nhấn không
+                if (SwingUtilities.isRightMouseButton(evt)) {
+                    // Lấy chỉ số dòng được nhấn
+                    int row = tableHD.rowAtPoint(evt.getPoint());
+                    modelOrderDetailUse = oddao.getListOrderDetail(modelOrderUse.getOrderId()).get(row);
+                    if (row >= 0) {
+                       // Chọn dòng đó
+                        tableHD.setRowSelectionInterval(row, row);
+
+                        // Hiển thị menu popup tại vị trí chuột
+                        EditOrderPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                    }
                 }
-                //Nếu k đc chọn thì sẽ set lại giá trị mặc định
-                else{
-                    kt = false;
-                    tenText.setText("NULL");
-                    loaiSPText.setText("NULL");
-                    maCTSPText.setText("NULL");
-                    giaBanText.setText("NULL");
-                    imageAvatar1.setImage(null);
-                }
-                    
             }
         });
     }
-    
     private void initPanel1() {
     // Khởi tạo panel1
-    
-
-    
     if (tdao.getListTable() != null) {
         for (ModelTable table : tdao.getListTable()) {
             // Tạo nút đại diện cho mỗi bàn
@@ -1112,7 +1330,7 @@ public class FormSell extends javax.swing.JPanel {
                 public void mousePressed(java.awt.event.MouseEvent evt) {
                     // Kiểm tra nếu là chuột phải
                     if (SwingUtilities.isRightMouseButton(evt)) {
-                        jPopupMenu2.show(evt.getComponent(), evt.getX(), evt.getY());
+                        EditTablePopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
                         maBanSelected = table.getTableID();
                         modelTable = table;
                         banSD = table;
@@ -1128,5 +1346,30 @@ public class FormSell extends javax.swing.JPanel {
     private void updateTable(){
         jPanel1.removeAll();
         initPanel1();
+    }
+
+    private void setTongTien() {
+        tongTien = 0;
+        for(ModelOrderDetail m: oddao.getListOrderDetail(modelOrderUse.getOrderId())){
+            tongTien += m.getPrice();
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###.##");  // Định dạng với dấu phẩy phân cách hàng nghìn
+        String gia = formatter.format(tongTien)+" vnđ";
+        tongTienText.setText(gia);
+    }
+
+    private void lamMoiKhiRoiBan() {
+        maBanSDText.setText("Chưa Sử Dụng");
+        tenBanSDText.setText("Chưa Sử Dụng");
+        modelHD = (DefaultTableModel) tableHD.getModel();
+        modelHD.setRowCount(0);
+        maHoaDonText.setText("NULL");
+        maKHText.setText("NULL");
+        tongTienText.setText("NULL");
+        tienKhachTraText.setText("");
+        tienTraLaiText.setText("");
+        ngayTaoText.setText("NULL");
+        tenNhanVienText.setText("NULL");
+        daVaoBan= false;
     }
 }

@@ -27,9 +27,9 @@ public class ChangePasswordInfo extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         oldPasswordText = new javax.swing.JTextField();
@@ -262,8 +262,8 @@ public class ChangePasswordInfo extends javax.swing.JDialog {
     private javax.swing.JTextField newPasswordText;
     private javax.swing.JTextField oldPasswordText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton suaButton;
     private javax.swing.JButton thoatButton;
     // End of variables declaration//GEN-END:variables

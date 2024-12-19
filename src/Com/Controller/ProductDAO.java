@@ -2,6 +2,7 @@ package Com.Controller;
 
 import Com.Model.ModelProduct;
 import Com.Model.ModelProductCategory;
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -28,8 +29,7 @@ public class ProductDAO {
             ps.setString(5, modelProduct.getProductCategory().getCategoryId());
             JOptionPane.showMessageDialog(null, "Thêm thành công");
             return ps.executeUpdate() > 0;
-        }catch(Exception ex){
-            ex.printStackTrace();
+        }catch(HeadlessException | SQLException ex){
         }
         return false;
     }
@@ -56,8 +56,7 @@ public class ProductDAO {
                 s.setProductCategory(mpc);
                 dsProduct.add(s);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (SQLException ex){
         }
         return dsProduct;
     }
@@ -73,23 +72,24 @@ public class ProductDAO {
 
             JOptionPane.showMessageDialog(null, "Updated");    
             return true;
-        } catch (Exception e ) {
+        } catch (HeadlessException | SQLException e ) {
             JOptionPane.showMessageDialog(null, "update not successful");      
         }
         return false;
         
     }
     
-    public void deleteProduct(String maSP) {
-        try {
-            String deleteChiTietSP = "DELETE FROM ChiTietSP WHERE MaSP = '"+maSP+"'";
-            String del = "delete from SanPham where MaSP= '"+maSP+"'";
-            PreparedStatement ps = dao.getConn().prepareStatement(deleteChiTietSP);
-            ps.executeUpdate();
-            ps = dao.getConn().prepareStatement(del);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+    // Xóa sản phẩm từ bảng SanPham và xử lý bảng liên quan
+    public boolean deleteSanPham(String maSP) throws SQLException {
+        // Trước tiên, xóa dữ liệu liên quan trong bảng ChiTietSP
+        ProductDetailDAO ctspDAO = new ProductDetailDAO();
+        ctspDAO.deleteChiTietSPByMaSP(maSP);
+
+        // Sau đó xóa bản ghi trong bảng SanPham
+        String sql = "DELETE FROM SanPham WHERE MaSP = ?";
+        try (PreparedStatement stmt = dao.getConn().prepareStatement(sql)) {
+            stmt.setString(1, maSP);
+            return stmt.executeUpdate() > 0;
         }
     }
 }

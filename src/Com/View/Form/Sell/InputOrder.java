@@ -28,9 +28,9 @@ public class InputOrder extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         nameText = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jLabel3 = new javax.swing.JLabel();
         themButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
@@ -306,8 +306,8 @@ public class InputOrder extends javax.swing.JDialog {
     private javax.swing.JLabel maKHText;
     private javax.swing.JLabel nameText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JTextField sdtText;
     private javax.swing.JButton searchButton;
     private javax.swing.JLabel tenBanText;

@@ -4,6 +4,9 @@ import Com.Controller.ProductDetailDAO;
 import Com.Model.ImageWrapper;
 import Com.Model.ModelProductDetail;
 import java.awt.Frame;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -53,20 +56,20 @@ public class FormProductDetail extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
-        searchText2 = new Com.Swing.SearchText();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        searchText2 = new Com.View.Swing.SearchText();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableSP = new Com.Swing.Table();
-        roundPanel3 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        tableSP = new Com.View.Swing.Table();
+        roundPanel3 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         tenText = new javax.swing.JLabel();
-        roundPanel5 = new Com.Swing.RoundPanel();
+        roundPanel5 = new Com.View.Swing.RoundPanel();
         loaiSPText = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         maCTSPText = new javax.swing.JLabel();
@@ -80,7 +83,7 @@ public class FormProductDetail extends javax.swing.JPanel {
         giaBanText = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         maSPText = new javax.swing.JLabel();
-        roundPanel4 = new Com.Swing.RoundPanel();
+        roundPanel4 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
         sanPhamButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -479,9 +482,14 @@ public class FormProductDetail extends javax.swing.JPanel {
             int opt = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa không ?","Delete",JOptionPane.YES_NO_OPTION);
             if(opt == 0){
                 int row = tableSP.getSelectedRow();
-                String value = (tableSP.getModel().getValueAt(row, 1)).toString();
+                String value = (tableSP.getModel().getValueAt(row, 2)).toString();
                 System.out.println(value);
-                pddao.deleteProductDetail(value);
+                try {
+                    pddao.deleteChiTietSPByMaSP(value);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Xóa Thất Bại !!!");
+                }
+                JOptionPane.showMessageDialog(null, "Xóa Thành Công");
                 refreshUser();
             }
             
@@ -535,7 +543,7 @@ public class FormProductDetail extends javax.swing.JPanel {
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editButton;
     private javax.swing.JLabel giaBanText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -551,15 +559,15 @@ public class FormProductDetail extends javax.swing.JPanel {
     private javax.swing.JLabel maSPText;
     private javax.swing.JLabel ngayNhapText;
     private javax.swing.JButton refreshButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
-    private Com.Swing.RoundPanel roundPanel3;
-    private Com.Swing.RoundPanel roundPanel4;
-    private Com.Swing.RoundPanel roundPanel5;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel3;
+    private Com.View.Swing.RoundPanel roundPanel4;
+    private Com.View.Swing.RoundPanel roundPanel5;
     private javax.swing.JButton sanPhamButton;
-    private Com.Swing.SearchText searchText2;
+    private Com.View.Swing.SearchText searchText2;
     private javax.swing.JLabel soLuongText;
-    private Com.Swing.Table tableSP;
+    private Com.View.Swing.Table tableSP;
     private javax.swing.JLabel tenText;
     private javax.swing.JLabel trangThaiText;
     // End of variables declaration//GEN-END:variables

@@ -7,6 +7,7 @@ import Com.Model.ModelProductCategory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -39,10 +40,10 @@ public class InputProduct extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         maText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -305,8 +306,7 @@ public class InputProduct extends javax.swing.JDialog {
                 }
                 ModelProduct u = new ModelProduct(ma, ten, image, tt, mp);
                 pdao.addProduct(u);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IOException ex) {
             }
         }
         else
@@ -316,7 +316,7 @@ public class InputProduct extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
@@ -326,8 +326,8 @@ public class InputProduct extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> maComboBox;
     private javax.swing.JTextField maText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JTextField tenText;
     private javax.swing.JButton themButton;
     private javax.swing.JButton thoatButton;

@@ -49,9 +49,9 @@ public class EditCustomer extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
         hoTenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -345,8 +345,7 @@ public class EditCustomer extends javax.swing.JDialog {
                 ModelCustomer u = new ModelCustomer(ma, ten, gt, date, dt, dc, em);
                 cdao.updateCustomer(u);
                 this.dispose();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (NumberFormatException ex) {
             }
         }
         else
@@ -375,8 +374,8 @@ public class EditCustomer extends javax.swing.JDialog {
     private javax.swing.JRadioButton namRadioButton;
     private javax.swing.JRadioButton nuRadioButton;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton suaButton;
     private javax.swing.JButton thoatButton;
     // End of variables declaration//GEN-END:variables

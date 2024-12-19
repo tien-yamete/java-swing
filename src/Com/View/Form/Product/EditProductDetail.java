@@ -4,7 +4,7 @@ import Com.Controller.ProductDAO;
 import Com.Controller.ProductDetailDAO;
 import Com.Model.ModelProduct;
 import Com.Model.ModelProductDetail;
-import Com.View.Dashboard.Dashboard;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,15 +14,15 @@ import javax.swing.JOptionPane;
 
 public class EditProductDetail extends javax.swing.JDialog {
     ProductDetailDAO pddao = new ProductDetailDAO();
-    private Dashboard d;
     boolean kt = false;
     ProductDAO pdao = new ProductDAO();
+    String soLuong = "^[0-9]*$";
+    
     public EditProductDetail(java.awt.Frame parent, boolean modal, ModelProductDetail modelProductDetail) {
         super(parent, modal);
         initComponents();
         updateComboBox();
         this.setLocationRelativeTo(null);
-        d = (Dashboard) parent;
         this.setTitle("Sửa chi tiết sản phẩm");
    
         maCTSPText.setText(modelProductDetail.getProductDetailId()+"");
@@ -56,9 +56,9 @@ public class EditProductDetail extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -291,7 +291,7 @@ public class EditProductDetail extends javax.swing.JDialog {
     }//GEN-LAST:event_deleteImageActionPerformed
 
     private void suaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaButtonActionPerformed
-        if(!soLuongText.getText().equalsIgnoreCase("")){
+        if(!soLuongText.getText().equalsIgnoreCase("") && soLuongText.getText().matches(soLuong)){
             try {
                 ModelProduct mp =null;
                 String maCT = maCTSPText.getText();
@@ -304,7 +304,7 @@ public class EditProductDetail extends javax.swing.JDialog {
                     date = null;
                 
                 int sl = Integer.parseInt(soLuongText.getText());
-                double gia = Double.valueOf(giaText.getText());
+                double gia = Double.parseDouble(giaText.getText());
                 String mt = moTaText.getText();
                 for(ModelProduct m : pdao.getListProduct()){
                     if(m.getProductId().equalsIgnoreCase(ma)){
@@ -313,10 +313,13 @@ public class EditProductDetail extends javax.swing.JDialog {
                 }
                 ModelProductDetail u = new ModelProductDetail(maCT, mp, date, sl, gia, mt);
                 pddao.updateProductDetail(u);
+                kt = true;
                 this.dispose();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (NumberFormatException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Sửa thất bại !!!");
+                return;
             }
+            JOptionPane.showMessageDialog(null, "Sửa thành công");
         }
         else
             JOptionPane.showMessageDialog(null, "Sửa thất bại !!!");
@@ -339,10 +342,15 @@ public class EditProductDetail extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> maComboBox;
     private javax.swing.JTextField moTaText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JTextField soLuongText;
     private javax.swing.JButton suaButton;
     private javax.swing.JButton thoatButton;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isKt() {
+        return kt;
+    }
+
 }

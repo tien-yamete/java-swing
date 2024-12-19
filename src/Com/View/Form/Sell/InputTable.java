@@ -19,9 +19,9 @@ public class InputTable extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         nameText = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         maText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -228,8 +228,8 @@ public class InputTable extends javax.swing.JDialog {
     private javax.swing.JTextField maText;
     private javax.swing.JLabel nameText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JTextField tenText;
     private javax.swing.JButton themButton;
     private javax.swing.JButton thoatButton;

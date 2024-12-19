@@ -1,7 +1,7 @@
 package Com.View.Component;
 
 import Com.Event.MenuEvent;
-import Com.Swing.MenuButton;
+import Com.View.Swing.MenuButton;
 import Com.Swing.Scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
@@ -62,7 +62,6 @@ public class Menu extends javax.swing.JPanel {
                 addMenu("2", "Bán hàng",1);
                 //addTitle("   ---Lmao---");
                 addMenu("3", "Nhân viên", 2);
-                addMenu("4", "Khuyến mãi", 3);
                 addMenu("5", "Hóa đơn", 4);
                 addMenu("6", "Sản phẩm", 5);
                 addMenu("7", "Khách hàng", 6);
@@ -135,7 +134,7 @@ public class Menu extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         scroll = new javax.swing.JScrollPane();
         panelMenu = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -197,7 +196,7 @@ public class Menu extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel panelMenu;

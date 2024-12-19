@@ -3,6 +3,7 @@ package Com.View.Form.Customer;
 import Com.Controller.CustomerDAO;
 import Com.Model.ModelCustomer;
 import java.awt.Frame;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -21,12 +22,21 @@ public class FormCustomer extends javax.swing.JPanel {
         searchText2.setHint("Search");
         tableKH.addTableStyle(jScrollPane1);
 
-                
-        model = (DefaultTableModel) tableKH.getModel();
+        model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa ô nào
+            }
+        };
 
         model.setColumnIdentifiers(new Object[]{
             "Mã Khách Hàng","Họ Tên","Giới Tính","Ngày Sinh","Số Điện Thoại","Địa Chỉ","Email"
         });
+        
+        tableKH.setModel(model);
+        
+        tableKH.getTableHeader().setReorderingAllowed(false); // Không cho phép kéo cột
+        tableKH.getTableHeader().setResizingAllowed(false);   // Không cho phép thay đổi kích thước cột
         
         ListSelectionModel selectionModel = tableKH.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -40,20 +50,20 @@ public class FormCustomer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
-        searchText2 = new Com.Swing.SearchText();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        searchText2 = new Com.View.Swing.SearchText();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableKH = new Com.Swing.Table();
-        roundPanel3 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        tableKH = new Com.View.Swing.Table();
+        roundPanel3 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         tenText = new javax.swing.JLabel();
-        roundPanel5 = new Com.Swing.RoundPanel();
+        roundPanel5 = new Com.View.Swing.RoundPanel();
         viTriText = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         maKHText = new javax.swing.JLabel();
@@ -67,7 +77,7 @@ public class FormCustomer extends javax.swing.JPanel {
         diaChiText = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         emailText = new javax.swing.JLabel();
-        roundPanel4 = new Com.Swing.RoundPanel();
+        roundPanel4 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
 
         roundPanel1.setBackground(new java.awt.Color(60, 60, 60));
@@ -434,7 +444,12 @@ public class FormCustomer extends javax.swing.JPanel {
             if(opt == 0){
                 int row = tableKH.getSelectedRow();
                 String value = (tableKH.getModel().getValueAt(row, 0)).toString();
-                cdao.deleteCustomer(value);
+                try {
+                    cdao.deleteCustomer(value);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+                }
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
                 refreshUser();
             }
             
@@ -461,7 +476,7 @@ public class FormCustomer extends javax.swing.JPanel {
     private javax.swing.JButton editButton;
     private javax.swing.JLabel emailText;
     private javax.swing.JLabel gioiTinhText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -474,14 +489,14 @@ public class FormCustomer extends javax.swing.JPanel {
     private javax.swing.JLabel maKHText;
     private javax.swing.JLabel ngaySinhText;
     private javax.swing.JButton refreshButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
-    private Com.Swing.RoundPanel roundPanel3;
-    private Com.Swing.RoundPanel roundPanel4;
-    private Com.Swing.RoundPanel roundPanel5;
-    private Com.Swing.SearchText searchText2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel3;
+    private Com.View.Swing.RoundPanel roundPanel4;
+    private Com.View.Swing.RoundPanel roundPanel5;
+    private Com.View.Swing.SearchText searchText2;
     private javax.swing.JLabel soDienThoaiText;
-    private Com.Swing.Table tableKH;
+    private Com.View.Swing.Table tableKH;
     private javax.swing.JLabel tenText;
     private javax.swing.JLabel viTriText;
     // End of variables declaration//GEN-END:variables

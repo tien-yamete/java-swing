@@ -2,19 +2,16 @@ package Com.View.Form.Product;
 
 import Com.Controller.ProductCategoryDAO;
 import Com.Model.ModelProductCategory;
-import java.awt.Frame;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class DialogProductCategory extends javax.swing.JDialog {
     boolean kt;
     ProductCategoryDAO pcdao = new ProductCategoryDAO();
     DefaultTableModel model;
-    ModelProductCategory modelProductCategory;
-    private Frame Dashboard;
     
     public DialogProductCategory(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -25,11 +22,21 @@ public class DialogProductCategory extends javax.swing.JDialog {
         tableSP.addTableStyle(jScrollPane1);
 
                 
-        model = (DefaultTableModel) tableSP.getModel();
+        model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa ô nào
+            }
+        };
 
         model.setColumnIdentifiers(new Object[]{
             "Mã Loại Sản Phẩm", "Loại Sản Phẩm", "Trạng Thái"
         });
+        
+        tableSP.setModel(model);
+        
+        tableSP.getTableHeader().setReorderingAllowed(false); // Không cho phép kéo cột
+        tableSP.getTableHeader().setResizingAllowed(false);   // Không cho phép thay đổi kích thước cột
         
         ListSelectionModel selectionModel = tableSP.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -44,9 +51,9 @@ public class DialogProductCategory extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        roundPanel4 = new Com.Swing.RoundPanel();
+        roundPanel4 = new Com.View.Swing.RoundPanel();
         jLabeltt = new javax.swing.JLabel();
-        roundPanel3 = new Com.Swing.RoundPanel();
+        roundPanel3 = new Com.View.Swing.RoundPanel();
         jLabelct = new javax.swing.JLabel();
         jLabelT = new javax.swing.JLabel();
         loaiSPText = new javax.swing.JTextField();
@@ -58,9 +65,9 @@ public class DialogProductCategory extends javax.swing.JDialog {
         xoaButton = new javax.swing.JButton();
         jLabelT1 = new javax.swing.JLabel();
         tenText = new javax.swing.JTextField();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableSP = new Com.Swing.Table();
+        tableSP = new Com.View.Swing.Table();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -270,7 +277,6 @@ public class DialogProductCategory extends javax.swing.JDialog {
                     ModelProductCategory u = new ModelProductCategory(ma, ten, tt);
                     pcdao.updateProductCategory(u);
                 } catch (Exception ex) {
-                    ex.printStackTrace();
                 }
             }
             refreshUser();
@@ -303,7 +309,6 @@ public class DialogProductCategory extends javax.swing.JDialog {
                 trangThaiComboBox.setSelectedIndex(0);
                 kt = false;
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
         refreshUser();
@@ -315,7 +320,13 @@ public class DialogProductCategory extends javax.swing.JDialog {
             if(opt == 0){
                 int row = tableSP.getSelectedRow();
                 String value = (tableSP.getModel().getValueAt(row, 0)).toString();
-                pcdao.deleteProduct(value);
+                try {
+                    pcdao.deleteLoaiSanPham(value);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Xóa Thất Bại !!!");
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Xóa Thành Công");
                 refreshUser();
             }
         }
@@ -332,11 +343,11 @@ public class DialogProductCategory extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField loaiSPText;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel2;
-    private Com.Swing.RoundPanel roundPanel3;
-    private Com.Swing.RoundPanel roundPanel4;
+    private Com.View.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel3;
+    private Com.View.Swing.RoundPanel roundPanel4;
     private javax.swing.JButton suaButton;
-    private Com.Swing.Table tableSP;
+    private Com.View.Swing.Table tableSP;
     private javax.swing.JTextField tenText;
     private javax.swing.JButton thenButton;
     private javax.swing.JComboBox<String> trangThaiComboBox;
@@ -357,34 +368,30 @@ public class DialogProductCategory extends javax.swing.JDialog {
 
     private void initListenerTable() {
         ListSelectionModel listSelectionModel = tableSP.getSelectionModel();
-        listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int[] rows = tableSP.getSelectedRows();
-                //Nếu được chọn sẽ set giá trị của dòng được chọn vào bảng
-                if(rows.length>0){
+        listSelectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            int[] rows = tableSP.getSelectedRows();
+            //Nếu được chọn sẽ set giá trị của dòng được chọn vào bảng
+            if(rows.length>0){
                 String ma = String.valueOf(tableSP.getValueAt(rows[0], 0));
                 String ten = String.valueOf(tableSP.getValueAt(rows[0], 1));
                 String tt = String.valueOf(tableSP.getValueAt(rows[0], 2));
-
+                
                 
                 tenText.setText(ten);
                 loaiSPText.setText(ma);
                 trangThaiComboBox.setSelectedItem(tt);
-
+                
                 
                 int selectedRow = tableSP.getSelectedRow();
-                modelProductCategory = pcdao.getListProductCategory().get(selectedRow);
+                pcdao.getListProductCategory().get(selectedRow);
                 kt = true;
-                }
-                //Nếu k đc chọn thì sẽ set lại giá trị mặc định
-                else{
-                    kt = false;
-                    loaiSPText.setText("Name");
-                    loaiSPText.setText("Loại");
-                    trangThaiComboBox.setSelectedIndex(0);
-                }
-                    
+            }
+            //Nếu k đc chọn thì sẽ set lại giá trị mặc định
+            else{
+                kt = false;
+                loaiSPText.setText("Name");
+                loaiSPText.setText("Loại");
+                trangThaiComboBox.setSelectedIndex(0);
             }
         });
     }

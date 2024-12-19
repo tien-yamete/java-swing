@@ -72,13 +72,27 @@ public class CustomerDAO {
         return false;
     }
     
-    public void deleteCustomer(String customer) {
-        try {
-            String del = "delete from Customer where CustomerID="+customer;
-            PreparedStatement ps = dao.getConn().prepareStatement(del);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
-        }
+    public boolean deleteCustomer(String customerID) throws SQLException {
+        // 1. Xóa ChiTietHoaDon liên quan thông qua MaHD từ HoaDon
+    String sqlDeleteChiTietHoaDon = "DELETE FROM ChiTietHoaDon WHERE MaHD IN (" +
+            "SELECT MaHD FROM HoaDon WHERE CustomerID = ?)";
+    try (PreparedStatement stmt0 = dao.getConn().prepareStatement(sqlDeleteChiTietHoaDon)) {
+        stmt0.setString(1, customerID);
+        stmt0.executeUpdate();
+    }
+
+    // 2. Xóa các hóa đơn (HoaDon) liên quan đến Customer
+    String sqlDeleteHoaDon = "DELETE FROM HoaDon WHERE CustomerID = ?";
+    try (PreparedStatement stmt1 = dao.getConn().prepareStatement(sqlDeleteHoaDon)) {
+        stmt1.setString(1, customerID);
+        stmt1.executeUpdate();
+    }
+
+    // 3. Xóa khách hàng từ bảng Customer
+    String sqlDeleteCustomer = "DELETE FROM Customer WHERE CustomerID = ?";
+    try (PreparedStatement stmt2 = dao.getConn().prepareStatement(sqlDeleteCustomer)) {
+        stmt2.setString(1, customerID);
+        return stmt2.executeUpdate() > 0;
+    }
     }
 }

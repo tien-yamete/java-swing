@@ -79,10 +79,10 @@ public class EditInfo extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         deleteImage = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         hoTenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -454,7 +454,7 @@ public class EditInfo extends javax.swing.JDialog {
     private javax.swing.JTextField diaChiText;
     private javax.swing.JTextField emailText;
     private javax.swing.JTextField hoTenText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -469,8 +469,8 @@ public class EditInfo extends javax.swing.JDialog {
     private javax.swing.JRadioButton namRadioButton;
     private javax.swing.JRadioButton nuRadioButton;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JButton suaButton;
     private javax.swing.JButton thoatButton;
     // End of variables declaration//GEN-END:variables

@@ -56,7 +56,7 @@
         <Property name="text" type="java.lang.String" value="WELCOME"/>
       </Properties>
     </Component>
-    <Container class="Com.Swing.ImageAvatar" name="imageAvatar1">
+    <Container class="Com.View.Swing.ImageAvatar" name="imageAvatar1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>

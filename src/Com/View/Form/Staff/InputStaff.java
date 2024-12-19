@@ -5,6 +5,7 @@ import Com.Model.ModelUser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -15,15 +16,18 @@ import javax.swing.filechooser.FileFilter;
 public class InputStaff extends javax.swing.JDialog {
     byte[] image = null;
     private String pathImage = null;
+    
     UserDAO udao = new UserDAO();
+    
     String emailPattern = "^[a-zA-Z0-9]+[@]+[a-zA-Z0-9]+[.]+[a-zA-Z0-9]+$";
     String mobileNumbberPattern = "^[0-9]*$";
+    
     boolean kt = false;
+    
     public InputStaff(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        //Dashboard d = (Dashboard) parent;
         this.setTitle("Thêm nhân viên");
     }
     
@@ -33,10 +37,10 @@ public class InputStaff extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel2 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         hoTenText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -360,12 +364,8 @@ public class InputStaff extends javax.swing.JDialog {
             int opt = ch.showOpenDialog(this);
             if (opt == JFileChooser.APPROVE_OPTION) {
                 pathImage = ch.getSelectedFile().getAbsolutePath();
-                imageAvatar1.setImage(new ImageIcon(pathImage));
-                
-            }
-            
-            
-                
+                imageAvatar1.setImage(new ImageIcon(pathImage)); 
+            }           
         }    }//GEN-LAST:event_imageAvatar1MouseClicked
     
     private void themButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themButtonActionPerformed
@@ -412,8 +412,7 @@ public class InputStaff extends javax.swing.JDialog {
                 }
                 ModelUser u = new ModelUser(ten, gt, date, dt, dc, tk, mk, em, vt, image);
                 udao.addUser(u);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IOException ex) {
             }
             kt = true;
             dispose();
@@ -430,7 +429,7 @@ public class InputStaff extends javax.swing.JDialog {
     private javax.swing.JTextField diaChiText;
     private javax.swing.JTextField emailText;
     private javax.swing.JTextField hoTenText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -446,8 +445,8 @@ public class InputStaff extends javax.swing.JDialog {
     private javax.swing.JRadioButton namRadioButton;
     private javax.swing.JRadioButton nuRadioButton;
     private javax.swing.JButton resetButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
     private javax.swing.JTextField taiKhoanText;
     private javax.swing.JButton themButton;
     private javax.swing.JButton thoatButton;

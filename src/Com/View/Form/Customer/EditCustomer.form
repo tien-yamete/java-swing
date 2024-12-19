@@ -79,7 +79,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="Com.Swing.RoundPanel" name="roundPanel1">
+        <Container class="Com.View.Swing.RoundPanel" name="roundPanel1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3c" red="3c" type="rgb"/>
@@ -117,7 +117,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="Com.Swing.RoundPanel" name="roundPanel2">
+        <Container class="Com.View.Swing.RoundPanel" name="roundPanel2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3c" red="3c" type="rgb"/>

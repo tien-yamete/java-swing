@@ -15,7 +15,7 @@ public class OrderDetailDAO {
     public OrderDetailDAO() {
     }
     public boolean addOrderDetail(ModelOrderDetail modelOrderDetail){
-        String sql = "INSERT INTO HoaDon(MaHD, MaCTSP, SoLuong, TongTien)"
+        String sql = "INSERT INTO ChiTietHoaDon(MaHD, MaCTSP, SoLuong, TongTien)"
                 + "VALUES(?,?,?,?)";
         try{
             PreparedStatement ps = dao.getConn().prepareStatement(sql);
@@ -32,7 +32,7 @@ public class OrderDetailDAO {
         return false;
     }
 
-    public  ArrayList<ModelOrderDetail> getListOrderDetail(String maHD){
+    public  ArrayList<ModelOrderDetail> getListOrderDetail(int maHD){
         ArrayList<ModelOrderDetail> dsOrderDetails = new ArrayList<>();
         String sql = "SELECT MaHD, ChiTietHoaDon.MaCTSP, ChiTietHoaDon.SoLuong, TongTien,"
                 + " ChiTietSP.MaSP, NgayNhap, ChiTietSP.SoLuong, Gia, MoTa,"
@@ -76,31 +76,43 @@ public class OrderDetailDAO {
         }
         return dsOrderDetails;
     }
-    public boolean updateOrderDetail(ModelOrderDetail modelOrderDetail){
-        try {           
-            PreparedStatement ps = dao.getConn().prepareStatement("UPDATE HoaDon SET MaHD=?, MaCTSP=?, SoLuong=?, DonGia=? WHERE MaHD = "+modelOrderDetail.getOrderID());
-            ps.setString(1, String.valueOf(modelOrderDetail.getOrderID()));
-            ps.setString(2, modelOrderDetail.getProductDetail().getProductDetailId());
-            ps.setString(3, String.valueOf(modelOrderDetail.getQuantity()));
-            ps.setString(4, String.valueOf(modelOrderDetail.getPrice()));
+    public boolean updateOrderDetail(ModelOrderDetail modelOrderDetail) throws SQLException{
+        String sql = "UPDATE ChiTietHoaDon SET SoLuong=?, TongTien=? WHERE MaHD=? AND MaCTSP=?";
+        try (PreparedStatement ps = dao.getConn().prepareStatement(sql)) {
+        // Set parameters for the query
+        ps.setInt(1, modelOrderDetail.getQuantity()); // SoLuong là int
+        ps.setString(2, String.valueOf(modelOrderDetail.getPrice()));
+        ps.setInt(3, modelOrderDetail.getOrderID()); // WHERE MaHD=?       
+        ps.setString(4, modelOrderDetail.getProductDetail().getProductDetailId()); // WHERE MaCTSP=?
 
-            ps.execute();
-            JOptionPane.showMessageDialog(null, "Updated");    
-            return true;
-        } catch (Exception e ) {
-            JOptionPane.showMessageDialog(null, "update not successful");      
+        return ps.executeUpdate() > 0;
         }
-        return false;
-        
+    }
+    public boolean deleteChiTietHoaDon(int maHD, String MaCTSP) throws SQLException {
+        String sql = "DELETE FROM ChiTietHoaDon WHERE MaHD = ? AND MaCTSP = ?";
+        try (PreparedStatement stmt = dao.getConn().prepareStatement(sql)) {
+            stmt.setInt(1, maHD);
+            stmt.setString(2, MaCTSP);
+            return stmt.executeUpdate() > 0;
+        }
     }
     
-    public void deleteOrderDetail(int MaHD,String ma) {
-        try {
-            String deleteBan = "DELETE FROM ChiTietHoaDon WHERE MaHD = "+MaHD +" AND MaCTSP="+ma;
-            PreparedStatement ps = dao.getConn().prepareStatement(deleteBan);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+    // Xóa các dòng trong bảng ChiTietHoaDon dựa vào MaHD
+    public boolean deleteChiTietHoaDonByMaHD(int maHD) throws SQLException {
+        String sql = "DELETE FROM ChiTietHoaDon WHERE MaHD = ?";
+        try (PreparedStatement stmt = dao.getConn().prepareStatement(sql)) {
+            stmt.setInt(1, maHD);
+            return stmt.executeUpdate() > 0;
         }
     }
+
+    // Xóa các dòng trong bảng ChiTietHoaDon dựa vào MaCTSP
+    public boolean deleteChiTietHoaDonByMaCTSP(String maCTSP) throws SQLException {
+        String sql = "DELETE FROM ChiTietHoaDon WHERE MaCTSP = ?";
+        try (PreparedStatement stmt = dao.getConn().prepareStatement(sql)) {
+            stmt.setString(1, maCTSP);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+    
 }

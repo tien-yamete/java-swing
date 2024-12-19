@@ -1,9 +1,9 @@
 package Com.Controller;
 
 import Com.Model.ModelOrder;
+import Com.Model.ModelTable;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class OrderDAO {
     DAO dao = new DAO();
@@ -18,7 +18,7 @@ public class OrderDAO {
         try{
             PreparedStatement ps = dao.getConn().prepareStatement(sql);
             ps.setString(1, String.valueOf(modelOrder.getEmployeeID()));
-            ps.setString(2, modelOrder.getTableID());
+            ps.setString(2, modelOrder.getModelTable().getTableID());
             ps.setString(3, String.valueOf(modelOrder.getCustomerID()));
             ps.setString(4, modelOrder.getCreatedDate());
             ps.setString(5, String.valueOf(modelOrder.getPrice()));
@@ -31,7 +31,7 @@ public class OrderDAO {
     }
     public ArrayList<ModelOrder> getListTableUse(){
         ArrayList<ModelOrder> dsTableUses = new ArrayList<>();
-        String sql = "SELECT * FROM HoaDon WHERE TrangThai=N'Chưa Thanh Toán'";
+        String sql = "SELECT HoaDon.*, TenBan,Ban.TrangThai AS TTB FROM HoaDon JOIN Ban ON HoaDon.MaBan = Ban.Maban WHERE HoaDon.TrangThai=N'Chưa Thanh Toán'";
         try{
             PreparedStatement ps = dao.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -39,7 +39,12 @@ public class OrderDAO {
                 ModelOrder s = new ModelOrder();
                 s.setOrderId(rs.getInt("MaHD"));
                 s.setEmployeeID(rs.getInt("StaffID"));
-                s.setTableID(rs.getString("MaBan"));
+                ModelTable m = new ModelTable(
+                    rs.getString("MaBan"),
+                    rs.getString("TenBan"),
+                    rs.getString("TTB")
+                );
+                s.setModelTable(m);
                 s.setCustomerID(rs.getInt("CustomerID"));
                 s.setCreatedDate(rs.getString("NgayTao"));
                 s.setPrice(rs.getDouble("TongTien"));
@@ -53,7 +58,7 @@ public class OrderDAO {
     }
     public  ArrayList<ModelOrder> getListOrder(){
         ArrayList<ModelOrder> dsOrders = new ArrayList<>();
-        String sql = "SELECT * FROM HoaDon";
+        String sql = "SELECT HoaDon.*, TenBan,Ban.TrangThai AS TTB FROM HoaDon JOIN Ban ON HoaDon.MaBan = Ban.Maban";
         try{
             PreparedStatement ps = dao.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -61,7 +66,12 @@ public class OrderDAO {
                 ModelOrder s = new ModelOrder();
                 s.setOrderId(rs.getInt("MaHD"));
                 s.setEmployeeID(rs.getInt("StaffID"));
-                s.setTableID(rs.getString("MaBan"));
+                ModelTable m = new ModelTable(
+                    rs.getString("MaBan"),
+                    rs.getString("TenBan"),
+                    rs.getString("TTB")
+                );
+                s.setModelTable(m);
                 s.setCustomerID(rs.getInt("CustomerID"));
                 s.setCreatedDate(rs.getString("NgayTao"));
                 s.setPrice(rs.getDouble("TongTien"));
@@ -73,32 +83,84 @@ public class OrderDAO {
         }
         return dsOrders;
     }
-    public boolean updateOrder(ModelOrder modelOrder){
-        try {           
+    public boolean updateOrder(ModelOrder modelOrder) throws SQLException{        
             PreparedStatement ps = dao.getConn().prepareStatement("UPDATE HoaDon SET StaffID=?, MaBan=?, CustomerID=?, NgayTao=?, TongTien=?, TrangThai=? WHERE MaHD = "+modelOrder.getOrderId());
-            ps.setString(2, String.valueOf(modelOrder.getCustomerID()));
-            ps.setString(3, modelOrder.getTableID());
-            ps.setString(4, String.valueOf(modelOrder.getEmployeeID()));
-            ps.setString(5, modelOrder.getCreatedDate());
-            ps.setString(6, String.valueOf(modelOrder.getPrice()));
-            ps.setString(7, modelOrder.getStatus());
-            ps.execute();
-            JOptionPane.showMessageDialog(null, "Updated");    
-            return true;
-        } catch (Exception e ) {
-            JOptionPane.showMessageDialog(null, "update not successful");      
+            ps.setString(1, String.valueOf(modelOrder.getCustomerID()));
+            ps.setString(2, modelOrder.getModelTable().getTableID());
+            ps.setString(3, String.valueOf(modelOrder.getEmployeeID()));
+            ps.setString(4, modelOrder.getCreatedDate());
+            ps.setString(5, String.valueOf(modelOrder.getPrice()));
+            ps.setString(6, modelOrder.getStatus());
+            return ps.executeUpdate()>0;
+    }
+
+    // Xóa hóa đơn từ bảng HoaDon và xử lý các bảng liên quan
+    public boolean deleteHoaDon(int maHD) throws SQLException {
+        // Trước tiên, xóa dữ liệu liên quan trong bảng ChiTietHoaDon
+        OrderDetailDAO cthdDAO = new OrderDetailDAO();
+        cthdDAO.deleteChiTietHoaDonByMaHD(maHD);
+
+        // Sau đó xóa bản ghi trong bảng HoaDon
+        String sql = "DELETE FROM HoaDon WHERE MaHD = ?";
+        try (PreparedStatement stmt = dao.getConn().prepareStatement(sql)) {
+            stmt.setInt(1, maHD);
+            return stmt.executeUpdate() > 0;
         }
-        return false;
-        
     }
     
-    public void deleteOrder(String MaHD) {
-        try {
-            String deleteBan = "DELETE FROM Ban WHERE MaBan = "+MaHD;
-            PreparedStatement ps = dao.getConn().prepareStatement(deleteBan);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại !!!");
+    public  ArrayList<ModelOrder> searchOrder(int name){
+        ArrayList<ModelOrder> dsOrders = new ArrayList<>();
+        String sql = "SELECT HoaDon.*, TenBan,Ban.TrangThai AS TTB FROM HoaDon JOIN Ban ON HoaDon.MaBan = Ban.Maban where MaHD = "+name;
+        try{
+            PreparedStatement ps = dao.getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                ModelOrder s = new ModelOrder();
+                s.setOrderId(rs.getInt("MaHD"));
+                s.setEmployeeID(rs.getInt("StaffID"));
+                ModelTable m = new ModelTable(
+                    rs.getString("MaBan"),
+                    rs.getString("TenBan"),
+                    rs.getString("TTB")
+                );
+                s.setModelTable(m);
+                s.setCustomerID(rs.getInt("CustomerID"));
+                s.setCreatedDate(rs.getString("NgayTao"));
+                s.setPrice(rs.getDouble("TongTien"));
+                s.setStatus(rs.getString("TrangThai"));
+                dsOrders.add(s);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
+        return dsOrders;
+    }
+    
+    public  ArrayList<ModelOrder> searchOrderDate(String nbd, String nkt, String tt){
+        ArrayList<ModelOrder> dsOrders = new ArrayList<>();
+        String sql = "SELECT HoaDon.*, TenBan,Ban.TrangThai AS TTB FROM HoaDon JOIN Ban ON HoaDon.MaBan = Ban.Maban where HoaDon.TrangThai = N'"+tt+"' AND (NgayTao BETWEEN '"+nbd+"' AND '"+nkt+"')";
+        try{
+            PreparedStatement ps = dao.getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                ModelOrder s = new ModelOrder();
+                s.setOrderId(rs.getInt("MaHD"));
+                s.setEmployeeID(rs.getInt("StaffID"));
+                ModelTable m = new ModelTable(
+                    rs.getString("MaBan"),
+                    rs.getString("TenBan"),
+                    rs.getString("TTB")
+                );
+                s.setModelTable(m);
+                s.setCustomerID(rs.getInt("CustomerID"));
+                s.setCreatedDate(rs.getString("NgayTao"));
+                s.setPrice(rs.getDouble("TongTien"));
+                s.setStatus(rs.getString("TrangThai"));
+                dsOrders.add(s);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return dsOrders;
     }
 }

@@ -3,6 +3,7 @@ package Com.View.Form.Staff;
 import Com.Controller.UserDAO;
 import Com.Model.ModelUser;
 import java.awt.Frame;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -22,12 +23,21 @@ public class FormStaff extends javax.swing.JPanel {
         searchText2.setHint("Search");
         tableNV.addTableStyle(jScrollPane1);
 
-                
-        model = (DefaultTableModel) tableNV.getModel();
+        model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa ô nào
+            }
+        };
 
         model.setColumnIdentifiers(new Object[]{
             "Mã Nhân Viên","Họ Tên","Giới Tính","Ngày Sinh","Số Điện Thoại","Địa Chỉ","Tên Tài Khoản","Mật Khẩu","Email","Vị Trí"
         });
+        
+        tableNV.setModel(model);
+        
+        tableNV.getTableHeader().setReorderingAllowed(false); // Không cho phép kéo cột
+        tableNV.getTableHeader().setResizingAllowed(false);   // Không cho phép thay đổi kích thước cột
         
         ListSelectionModel selectionModel = tableNV.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -42,20 +52,20 @@ public class FormStaff extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel1 = new Com.Swing.RoundPanel();
+        roundPanel1 = new Com.View.Swing.RoundPanel();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
-        searchText2 = new Com.Swing.SearchText();
-        roundPanel2 = new Com.Swing.RoundPanel();
+        searchText2 = new Com.View.Swing.SearchText();
+        roundPanel2 = new Com.View.Swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableNV = new Com.Swing.Table();
-        roundPanel3 = new Com.Swing.RoundPanel();
-        imageAvatar1 = new Com.Swing.ImageAvatar();
+        tableNV = new Com.View.Swing.Table();
+        roundPanel3 = new Com.View.Swing.RoundPanel();
+        imageAvatar1 = new Com.View.Swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         tenText = new javax.swing.JLabel();
-        roundPanel5 = new Com.Swing.RoundPanel();
+        roundPanel5 = new Com.View.Swing.RoundPanel();
         viTriText = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         maNVText = new javax.swing.JLabel();
@@ -73,7 +83,7 @@ public class FormStaff extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         emailText = new javax.swing.JLabel();
-        roundPanel4 = new Com.Swing.RoundPanel();
+        roundPanel4 = new Com.View.Swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
 
         roundPanel1.setBackground(new java.awt.Color(60, 60, 60));
@@ -193,12 +203,6 @@ public class FormStaff extends javax.swing.JPanel {
         );
 
         roundPanel3.setBackground(new java.awt.Color(60, 60, 60));
-
-        imageAvatar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                imageAvatar1MouseClicked(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -465,10 +469,6 @@ public class FormStaff extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void imageAvatar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageAvatar1MouseClicked
-
-    }//GEN-LAST:event_imageAvatar1MouseClicked
-
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         if(kt == true){
             EditStaff editStaff = new EditStaff(Dashboard, kt, modelUserSelected);
@@ -486,7 +486,13 @@ public class FormStaff extends javax.swing.JPanel {
             if(opt == 0){
                 int row = tableNV.getSelectedRow();
                 String value = (tableNV.getModel().getValueAt(row, 0)).toString();
-                udao.deleteStaff(value);
+                try {
+                    udao.deleteStaff(value);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Xoá thất bại !!!");
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
                 refreshUser();
             }
             
@@ -502,7 +508,6 @@ public class FormStaff extends javax.swing.JPanel {
         model = (DefaultTableModel) tableNV.getModel();
         model.setRowCount(0);
         for(ModelUser s: udao.searchUser(searchText2.getText())){
-            //dsImage.add(s.getImage());
             model.addRow(new Object[]{
                 s.getId(), s.getName(), s.getGender(), s.getDateOfBirth(), s.getPhone(), s.getAddress(), s.getUsername(), s.getPassword(), s.getEmail(),s.getPosition()
             });
@@ -517,7 +522,7 @@ public class FormStaff extends javax.swing.JPanel {
     private javax.swing.JButton editButton;
     private javax.swing.JLabel emailText;
     private javax.swing.JLabel gioiTinhText;
-    private Com.Swing.ImageAvatar imageAvatar1;
+    private Com.View.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -533,14 +538,14 @@ public class FormStaff extends javax.swing.JPanel {
     private javax.swing.JLabel matKhauText;
     private javax.swing.JLabel ngaySinhText;
     private javax.swing.JButton refreshButton;
-    private Com.Swing.RoundPanel roundPanel1;
-    private Com.Swing.RoundPanel roundPanel2;
-    private Com.Swing.RoundPanel roundPanel3;
-    private Com.Swing.RoundPanel roundPanel4;
-    private Com.Swing.RoundPanel roundPanel5;
-    private Com.Swing.SearchText searchText2;
+    private Com.View.Swing.RoundPanel roundPanel1;
+    private Com.View.Swing.RoundPanel roundPanel2;
+    private Com.View.Swing.RoundPanel roundPanel3;
+    private Com.View.Swing.RoundPanel roundPanel4;
+    private Com.View.Swing.RoundPanel roundPanel5;
+    private Com.View.Swing.SearchText searchText2;
     private javax.swing.JLabel soDienThoaiText;
-    private Com.Swing.Table tableNV;
+    private Com.View.Swing.Table tableNV;
     private javax.swing.JLabel tenTKText;
     private javax.swing.JLabel tenText;
     private javax.swing.JLabel viTriText;
